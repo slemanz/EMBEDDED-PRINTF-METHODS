@@ -100,15 +100,60 @@ monitor arm semihosting enable
 
 2. **Set the linker arguments:**
   
+
+In the properties of the project, go to C/C++ build, and go to, linker miscelallaneos, and add this flag:
+
 ```
 specs=rdimon.specs -lc -lrdimon
 ```
 
-
+![image](OpenOCD/3.png)
 
 
 - Redirect `printf` output through GDB and OpenOCD.
 
-1. **Example Code:**
+3. **Add the function call to main.c**
+
+```
+extern void initialise_monitor_handles(void);
+initialise_monitor_handles();
+```
+
+So, the code will look like:
+
+```
+#include "stdio.h"
+
+extern void initialise_monitor_handles(void);
+
+
+
+int main(void)
+{
+  initialise_monitor_handles();
+
+  printf("Hello World!\n");
+
+  for(;;);
+}
+```
+
+4. **Exclude syscall.c from the build**
+
+To do this, go to the properties of the file, and in C/C++ settings, check the "Exclude resource from build".
+
+![image](OpenOCD/4.png)
+
+So the file will look like:
+
+![image](OpenOCD/5.png)
+
+5. **Degug the code!**
+
+Now that we complete all the steps, just debug!!!!
+
+![image](OpenOCD/6.png)
+
+
 
 
