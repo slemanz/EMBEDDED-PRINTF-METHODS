@@ -89,7 +89,7 @@ First in the debug configuration page, change the debug probe to OpenOCD:
 
 ![image](OpenOCD/1.png)
 
-After this, put in the startup the following command:
+ After this, add the following command in the startup:
 
 ```
 monitor arm semihosting enable
@@ -101,7 +101,7 @@ monitor arm semihosting enable
 2. **Set the linker arguments:**
   
 
-In the properties of the project, go to C/C++ build, and go to, linker miscelallaneos, and add this flag:
+In the project properties, go to C/C++ Build, then to Linker Miscellaneous, and add this flag:
 
 ```
 specs=rdimon.specs -lc -lrdimon
@@ -110,18 +110,19 @@ specs=rdimon.specs -lc -lrdimon
 ![image](OpenOCD/3.png)
 
 
-- Redirect `printf` output through GDB and OpenOCD.
 
 3. **Add the function call to main.c**
 
-```
+Add the following code to `main.c`:
+
+```c
 extern void initialise_monitor_handles(void);
 initialise_monitor_handles();
 ```
 
-So, the code will look like:
+So, the code will look like this:
 
-```
+```c
 #include "stdio.h"
 
 extern void initialise_monitor_handles(void);
@@ -140,17 +141,17 @@ int main(void)
 
 4. **Exclude syscall.c from the build**
 
-To do this, go to the properties of the file, and in C/C++ settings, check the "Exclude resource from build".
+To do this, go to the file properties, and in C/C++ Settings, check the "Exclude resource from build" option.
 
 ![image](OpenOCD/4.png)
 
-So the file will look like:
+The file will look like this:
 
 ![image](OpenOCD/5.png)
 
 5. **Degug the code!**
 
-Now that we complete all the steps, just debug!!!!
+Now that we have completed all the steps, start debugging!
 
 ![image](OpenOCD/6.png)
 
